@@ -1,27 +1,362 @@
 <!DOCTYPE html>
-<html lang="ru">
 
+<html lang="en">
 <head>
-	<title> Дом Лёши </title>
-	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta charset="UTF-8">
-	<meta name="author" content="Aleksei Romanenko">
-	<meta name="description" content="Teacher">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="main.css" type="text/css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: #d0cec8;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+padding: 24px;
+}
+
+.page {
+width: 210mm;
+min-height: 297mm;
+background: #f8f6f0;
+position: relative;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+}
+
+/* HALFTONE CIRCLE */
+.halftone {
+position: absolute;
+top: -20mm;
+right: -30mm;
+width: 160mm;
+height: 160mm;
+border-radius: 50%;
+background-image: radial-gradient(circle, #1a1a1a 1.2px, transparent 1.2px);
+background-size: 6px 6px;
+-webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 72%);
+mask-image: radial-gradient(circle at center, black 30%, transparent 72%);
+opacity: .13;
+}
+
+/* TOP BAR */
+.topbar {
+background: #1a1a1a;
+padding: 10px 16mm;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.topbar-left {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 11px;
+color: #f8f6f0;
+letter-spacing: .4em;
+text-transform: uppercase;
+}
+
+.topbar-right {
+font-family: ‘Barlow’, sans-serif;
+font-size: 10px;
+color: #666;
+letter-spacing: .2em;
+}
+
+/* MAIN CONTENT */
+.content {
+padding: 14mm 16mm 12mm;
+flex: 1;
+display: flex;
+flex-direction: column;
+}
+
+/* LOGO MARK */
+.logomark {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+margin-bottom: 10mm;
+}
+
+.logo-box {
+width: 28px;
+height: 28px;
+border: 3px solid #1a1a1a;
+position: relative;
+flex-shrink: 0;
+}
+
+.logo-box::after {
+content: ‘’;
+position: absolute;
+top: 4px; left: 4px;
+width: 16px; height: 16px;
+background: #e8320a;
+}
+
+.vol {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 13px;
+letter-spacing: .25em;
+color: #1a1a1a;
+margin-top: 6px;
+}
+
+/* HERO TYPE */
+.hero {
+margin-bottom: 10mm;
+position: relative;
+z-index: 1;
+}
+
+.hero-line {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+line-height: .92;
+color: #1a1a1a;
+letter-spacing: -.01em;
+display: block;
+}
+
+.hero-line.xl  { font-size: 52px; }
+.hero-line.xxl { font-size: 76px; }
+.hero-line.red { color: #e8320a; }
+.hero-line.outline {
+-webkit-text-stroke: 2px #1a1a1a;
+color: transparent;
+}
+
+/* DIVIDER */
+.rule {
+height: 3px;
+background: #1a1a1a;
+margin-bottom: 1px;
+}
+.rule-thin {
+height: 1px;
+background: #e8320a;
+margin-bottom: 8mm;
+}
+
+/* PROJECT LIST */
+.list { flex: 1; }
+
+.item {
+display: grid;
+grid-template-columns: 36px 1fr 56px;
+align-items: baseline;
+gap: 0;
+border-bottom: 1px solid #c8c4b8;
+padding: 5.5mm 0;
+}
+
+.item:last-child { border-bottom: none; }
+
+.item-num {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 400;
+font-size: 11px;
+color: #b0aca4;
+letter-spacing: .1em;
+}
+
+.item-name {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 28px;
+color: #1a1a1a;
+letter-spacing: .02em;
+line-height: 1;
+}
+
+.item.accent .item-name { color: #e8320a; }
+
+.item-week {
+font-family: ‘Barlow’, sans-serif;
+font-size: 9px;
+color: #999;
+letter-spacing: .15em;
+text-align: right;
+text-transform: uppercase;
+}
+
+.stars {
+display: block;
+font-size: 8px;
+color: #e8320a;
+letter-spacing: .05em;
+margin-top: 1px;
+}
+
+/* FOOTER */
+.footer {
+margin-top: 8mm;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 4mm;
+padding-top: 4mm;
+border-top: 1px solid #1a1a1a;
+}
+
+
+.foot-label {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 700;
+font-size: 8px;
+letter-spacing: .3em;
+text-transform: uppercase;
+color: #999;
+margin-bottom: 3px;
+display: block;
+}
+
+.foot-val {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 22px;
+color: #1a1a1a;
+line-height: 1;
+}
+
+.foot-sub {
+font-family: ‘Barlow’, sans-serif;
+font-size: 8px;
+color: #aaa;
+letter-spacing: .1em;
+margin-top: 2px;
+}
+
+.foot-motto {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 11px;
+color: #1a1a1a;
+letter-spacing: .15em;
+text-transform: uppercase;
+line-height: 1.4;
+}
+
+.foot-motto span { color: #e8320a; }
+
+/* bottom bar */
+.bottombar {
+background: #e8320a;
+height: 6px;
+}
+
+@media print {
+body { background: none; padding: 0; }
+.page { width: 210mm; min-height: 297mm; }
+}
+</style>
+
 </head>
-
 <body>
+<div class="page">
+  <div class="halftone"></div>
 
-	<nav class="menu">
-		<a href="index.html" class="menu_item menu_item_active">Home</a>
-	</nav>
+  <div class="topbar">
+    <span class="topbar-left">Python Developer · Summer 2026</span>
+    <span class="topbar-right">40 hrs / week</span>
+  </div>
 
-	<h1> Python Projects </h1>
+  <div class="content">
 
+
+
+<div class="hero">
+  <!-- <span class="hero-line xl">PROJECTS</span> -->
+  <span class="hero-line xxl">PYTHON</span>
+  <span class="hero-line xxl outline">PROJECTS</span>
+  <span class="hero-line xl red">SUMMER</span>
+</div>
+
+<div class="rule"></div>
+<div class="rule-thin"></div>
+
+<div class="list">
+
+  <div class="item">
+    <span class="item-num">01</span>
+    <span class="item-name">MARKDOWN EDITOR</span>
+    <div>
+      <span class="item-week">WK 1–2</span>
+    </div>
+  </div>
+
+  <div class="item accent">
+    <span class="item-num">02</span>
+    <span class="item-name">REGEX ENGINE</span>
+    <div>
+      <span class="item-week">WK 3–4</span>
+      <span class="stars">★ portfolio</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="item-num">03</span>
+    <span class="item-name">HR DATA ANALYSIS</span>
+    <div>
+      <span class="item-week">WK 5–6</span>
+      <span class="stars">★ portfolio</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="item-num">04</span>
+    <span class="item-name">TRANSLATOR</span>
+    <div>
+      <span class="item-week">WK 7–8</span>
+    </div>
+  </div>
+
+  <div class="item accent">
+    <span class="item-num">05</span>
+    <span class="item-name">WEB SCRAPER</span>
+    <div>
+      <span class="item-week">WK 9–10</span>
+      <span class="stars">★ portfolio</span>
+    </div>
+  </div>
+
+  <div class="item accent">
+    <span class="item-num">06</span>
+    <span class="item-name">TEXT BROWSER</span>
+    <div>
+      <span class="item-week">WK 11–13</span>
+      <span class="stars">★★ portfolio</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="foot-block">
+    <span class="foot-label">Projects</span>
+    <span class="foot-val">6</span>
+    <p class="foot-sub">total this summer</p>
+  </div>
+  <div class="foot-block">
+    <span class="foot-label">Duration</span>
+    <span class="foot-val">13</span>
+    <p class="foot-sub">weeks · june–aug</p>
+  </div>
+  <div class="foot-block" style="display:flex;align-items:flex-end;">
+    <p class="foot-motto">romanenko.lesha@gmail.com</p>
+  </div>
+</div>
+
+  </div>
+
+  <div class="bottombar"></div>
+</div>
 </body>
-
 </html>
