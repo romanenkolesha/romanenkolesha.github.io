@@ -336,6 +336,32 @@ body {
   .item { padding: 12px 0; }
   .topbar-left { letter-spacing: 0.2em; }
 }
+
+.roadmap-section {
+  margin-bottom: 8mm;
+}
+
+.roadmap-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: #e8320a;
+  margin-bottom: 6px;
+}
+
+.roadmap-text {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  line-height: 1.75;
+  color: #3a3a3a;
+  letter-spacing: .01em;
+}
+
+@media (max-width: 768px) {
+  .roadmap-text { font-size: 11px; }
+}
 </style>
 </head>
 <body>
@@ -431,6 +457,24 @@ body {
       <div class="foot-block" style="display:flex;align-items:flex-end;justify-content:center;">
         <p class="foot-motto">romanenko.lesha@gmail.com</p>
       </div>
+    </div>
+
+    <div class="rule" style="margin-top: 8mm;"></div>
+    <div class="rule-thin"></div>
+
+    <div class="roadmap-section">
+      <div class="roadmap-label">Projects</div>
+      <p class="roadmap-text">Six Python projects completed over 13 weeks, each chosen to build a specific skill: text formatting and string operations (Markdown Editor), string parsing and recursion (Regex Engine), data analysis with Pandas (HR Data Analysis), HTTP and web scraping (Translator, Web Scraper), and low-level browser implementation (Text Browser). Four projects are prepared as portfolio pieces with clean code, tests, and documentation on GitHub.</p>
+    </div>
+
+    <div class="roadmap-section">
+      <div class="roadmap-label">Mathematics &amp; Computer Science</div>
+      <p class="roadmap-text">Alongside the projects, I am completing a discrete mathematics course covering linear algebra, combinatorics, graph theory, and discrete probability — the mathematical foundation for algorithms and machine learning. I am also taking Harvard CS50, building a solid understanding of computer science fundamentals.</p>
+    </div>
+
+    <div class="roadmap-section" style="margin-bottom: 0;">
+      <div class="roadmap-label">Why this matters</div>
+      <p class="roadmap-text">My goal is a junior Python developer position by late 2026. This summer is about building things, understanding them deeply, and becoming the kind of developer who can reason from first principles — not just use them.</p>
     </div>
 
   </div>
