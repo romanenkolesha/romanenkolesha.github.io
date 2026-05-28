@@ -2,15 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Romanenko Lesha · Summer 2026</title>
-    
-    <!-- Fontsource CDN for reliable font loading -->
+    <!-- Fontsource CDN - Reliable font loading for GitHub Pages -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.0.0/index.css">
-    
     <style>
         * {
             margin: 0;
@@ -29,10 +26,7 @@
         }
 
         html {
-            font-size: 16px;
-            -webkit-text-size-adjust: 100%;
-            -moz-text-size-adjust: 100%;
-            text-size-adjust: 100%;
+            font-size: 16px; /* Base font size - DO NOT change this */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -43,20 +37,6 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
-            -webkit-text-size-adjust: 100%;
-            -moz-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-
-        /* Safari-specific font fixes */
-        @supports (-webkit-appearance: none) {
-            html {
-                -webkit-text-size-adjust: none;
-            }
-            
-            body {
-                -webkit-text-size-adjust: none;
-            }
         }
 
         /* Header */
@@ -153,26 +133,6 @@
             text-transform: uppercase;
             margin-bottom: 1rem;
             color: var(--text-primary);
-        }
-
-        /* Why This Matters Section */
-        .why-matters {
-            margin-bottom: 3rem;
-        }
-
-        .why-matters h3 {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .why-matters p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
         }
 
         /* Stats Section */
@@ -288,13 +248,17 @@
             text-align: right;
         }
 
+        .color-orange {
+            color:var(--accent-orange);
+        }
+
+
         /* Portfolio Link */
         .portfolio-link {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             margin-top: 2rem;
-            margin-bottom: 2rem;
             font-size: 0.85rem;
             color: var(--accent-orange);
             text-decoration: none;
@@ -307,6 +271,7 @@
 
         /* Bio Section */
         .bio-section {
+            margin-top: 3rem;
             padding-top: 2rem;
             border-top: 2px solid var(--text-primary);
         }
@@ -322,34 +287,10 @@
             margin-bottom: 0;
         }
 
-        /* Safari-specific fixes for font sizes */
-        @media screen and (-webkit-min-device-pixel-ratio: 0) {
-            .hero-title {
-                font-size: clamp(2.5rem, 8vw, 5rem) !important;
-            }
-            
-            .project-name {
-                font-size: 1.5rem !important;
-            }
-            
-            .stat-value {
-                font-size: 2rem !important;
-            }
-            
-            .projects-description,
-            .why-matters p {
-                font-size: 0.95rem !important;
-            }
-            
-            .bio-text {
-                font-size: 0.9rem !important;
-            }
-        }
-
         /* Responsive Typography */
         @media (max-width: 600px) {
             html {
-                font-size: 16px;
+                font-size: 14px;
             }
             
             .left-column,
@@ -382,9 +323,9 @@
         <div class="header-left">
             <a href="#">Romanenko Lesha · Summer 2026</a>
         </div>
-        <div class="header-right">
+        <!--<div class="header-right">
             40 hrs / week
-        </div>
+        </div>-->
     </header>
 
     <!-- Main Content -->
@@ -399,14 +340,14 @@
                 </h1>
 
                 <div class="projects-description">
-                    <h3>Projects</h3>
+                    <h3>Description</h3>
                     <p>Six Python projects completed over 13 weeks, each chosen to build a specific skill: text formatting and string operations (Markdown Editor), string parsing and recursion (Regex Engine), data analysis with Pandas (HR Data Analysis), HTTP and web scraping (Translator, Web Scraper), and low-level browser implementation (Text Browser). Four projects are prepared as portfolio pieces with clean code, tests, and documentation on GitHub.</p>
-                </div>
-
-                <div class="why-matters">
-                    <h3>Why This Matters</h3>
-                    <p>My goal is a junior Python developer position by late 2026. This summer is about building things, understanding them deeply, and becoming the kind of developer who can reason from first principles — not just use them.</p>
-                </div>
+                <br>
+                    <h3>Why this matters</h3>
+                    <p>
+                  My goal is a junior Python developer position by late 2026. This summer is about building things, understanding them deeply, and becoming the kind of developer who can reason from first principles — not just use them.
+                </p>
+                  </div>
             </div>
 
             <div class="stats">
@@ -431,39 +372,39 @@
         <section class="right-column">
             <div class="projects-list-header">
                 <span>Projects</span>
-                <span>Weeks</span>
+                <!--<span>Weeks</span>-->
             </div>
 
             <div class="projects-list">
                 <div class="project-item">
                     <span class="project-number">01</span>
                     <span class="project-name">Markdown Editor</span>
-                    <span class="project-weeks">1 – 2</span>
+                    <!--<span class="project-weeks">1 – 2</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">02</span>
                     <span class="project-name">Regex Engine</span>
-                    <span class="project-weeks">3 – 4</span>
+                    <!--<span class="project-weeks">3 – 4</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">03</span>
                     <span class="project-name">HR Data Analysis</span>
-                    <span class="project-weeks">5 – 6</span>
+                    <!--<span class="project-weeks">5 – 6</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">04</span>
                     <span class="project-name">Translator</span>
-                    <span class="project-weeks">7 – 8</span>
+                    <!--<span class="project-weeks">7 – 8</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">05</span>
-                    <span class="project-name">Web Scraper</span>
-                    <span class="project-weeks">9 – 10</span>
+                    <span class="project-name color-orange">Web Scraper</span>
+                    <!--<span class="project-weeks">9 – 10</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">06</span>
                     <span class="project-name">Text Browser</span>
-                    <span class="project-weeks">11 – 13</span>
+                    <!--<span class="project-weeks">11 – 13</span>-->
                 </div>
             </div>
 
