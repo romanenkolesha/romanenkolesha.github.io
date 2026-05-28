@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Projects · Summer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F2EFE8;
+    --orange: #E8450A;
+    --dark: #1A1916;
+    --mid: #4A4844;
+    --border: rgba(26,25,22,0.15);
+    --border-strong: rgba(26,25,22,0.35);
+  }
+
+  html { background: var(--cream); }
+
+  body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'Epilogue', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 48px;
+    border-bottom: 0.5px solid var(--border-strong);
+  }
+
+  .nav-brand {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dark);
+    text-decoration: none;
+  }
+
+  .nav-meta {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--dark);
+  }
+
+  /* ── DESKTOP LAYOUT ── */
+  .page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 57px);
+  }
+
+  /* LEFT COLUMN */
+  .col-left {
+    padding: 72px 48px 72px 48px;
+    border-right: 0.5px solid var(--border-strong);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(52px, 6vw, 60px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--orange);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .hero-title .line-outline {
+    -webkit-text-stroke: 2px var(--dark);
+    color: transparent;
+    display: block;
+  }
+
+  .hero-title .line-solid {
+    color: var(--orange);
+    display: block;
+  }
+
+  .left-bottom {
+    margin-top: 64px;
+  }
+
+  .tagline-block {
+    margin-bottom: 32px;
+  }
+
+  .tagline-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 12px;
+  }
+
+  .tagline-text {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--mid);
+    max-width: 360px;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 40px;
+    padding-top: 32px;
+    border-top: 0.5px solid var(--border-strong);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: var(--mid);
+    margin-top: 2px;
+  }
+
+  .contact-block {
+    margin-top: 8px;
+  }
+
+  .contact-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dark);
+    word-break: break-all;
+  }
+
+  /* RIGHT COLUMN */
+  .col-right {
+    padding: 72px 48px;
+  }
+
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 0.5px solid var(--border-strong);
+  }
+
+  .projects-header-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .projects-header-weeks {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .project-list { list-style: none; }
+
+  .project-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 22px 0;
+    border-bottom: 0.5px solid var(--border);
+    cursor: default;
+    transition: padding-left 0.2s ease;
+  }
+
+  .project-item:hover { padding-left: 8px; }
+
+  .project-left {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+
+  .project-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+    min-width: 24px;
+    padding-top: 3px;
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .project-name.accent { color: var(--orange); }
+  .project-name.dark { color: var(--dark); }
+
+  .project-weeks {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  /* PORTFOLIO NOTE */
+  .portfolio-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .portfolio-star {
+    color: var(--orange);
+    font-size: 14px;
+  }
+
+  .portfolio-text {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--mid);
+    letter-spacing: 0.02em;
+  }
+
+  /* DESCRIPTION SECTION */
+  .description-section {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1.5px solid var(--dark);
+  }
+
+  .description-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+
+  .description-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--mid);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav {
+      padding: 16px 24px;
+    }
+
+    .nav-meta { display: none; }
+    .hamburger { display: flex; }
+
+    .page {
+      display: block;
+    }
+
+    .col-left {
+      padding: 48px 24px 40px;
+      border-right: none;
+      border-bottom: 0.5px solid var(--border-strong);
+    }
+
+    .hero-title {
+      font-size: clamp(36px, 16vw, 32px);
+    }
+
+    .left-bottom { margin-top: 48px; }
+
+    .stats-row { gap: 28px; flex-wrap: wrap; }
+
+    .col-right {
+      padding: 48px 24px 72px;
+    }
+
+    .project-name {
+      font-size: clamp(18px, 5vw, 24px);
+    }
+
+    .description-section { margin-top: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">Python Developer · Summer 2026</a>
+  <span class="nav-meta">40 hrs / week</span>
+  <!--<div class="hamburger" aria-label="Menu">
+    <span></span><span></span>
+  </div>-->
+</nav>
+
+<main class="page">
+
+  <!-- LEFT COLUMN -->
+  <section class="col-left">
+    <div>
+      <h1 class="hero-title">
+        <span class="line-solid">Python</span>
+        <span class="line-outline">Projects</span>
+        <span class="line-solid">Summer</span>
+      </h1>
+    </div>
+
+    <div class="left-bottom">
+      <div class="tagline-block">
+        <p class="tagline-label">Projects</p>
+        <p class="tagline-text">
+          Six Python projects completed over 13 weeks, each chosen to build a specific skill: text formatting and string operations (Markdown Editor), string parsing and recursion (Regex Engine), data analysis with Pandas (HR Data Analysis), HTTP and web scraping (Translator, Web Scraper), and low-level browser implementation (Text Browser). Four projects are prepared as portfolio pieces with clean code, tests, and documentation on GitHub.
+        </p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-label">Projects</span>
+          <span class="stat-value">6</span>
+          <span class="stat-sub">total this summer</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Duration</span>
+          <span class="stat-value">13</span>
+          <span class="stat-sub">weeks · june–aug</span>
+        </div>
+        <div class="stat contact-block">
+          <span class="stat-label">Contact</span>
+          <span class="contact-value">romanenko.lesha<br>@gmail.com</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT COLUMN -->
+  <section class="col-right">
+    <div class="projects-header">
+      <span class="projects-header-title">Projects</span>
+      <span class="projects-header-weeks">Weeks</span>
+    </div>
+
+    <ul class="project-list">
+      <li class="project-item">
+        <div class="project-left">
+          <span class="project-num">01</span>
+          <span class="project-name dark">Markdown Editor</span>
+        </div>
+        <span class="project-weeks">1 – 2</span>
+      </li>
+      <li class="project-item">
+        <div class="project-left">
+          <span class="project-num">02</span>
+          <span class="project-name accent">Regex Engine</span>
+        </div>
+        <span class="project-weeks">3 – 4</span>
+      </li>
+      <li class="project-item">
+        <div class="project-left">
+          <span class="project-num">03</span>
+          <span class="project-name accent">HR Data Analysis</span>
+        </div>
+        <span class="project-weeks">5 – 6</span>
+      </li>
+      <li class="project-item">
+        <div class="project-left">
+          <span class="project-num">04</span>
+          <span class="project-name dark">Translator</span>
+        </div>
+        <span class="project-weeks">7 – 8</span>
+      </li>
+      <li class="project-item">
+        <div class="project-left">
+          <span class="project-num">05</span>
+          <span class="project-name accent">Web Scraper</span>
+        </div>
+        <span class="project-weeks">9 – 10</span>
+      </li>
+      <li class="project-item">
+        <div class="project-left">
+          <span class="project-num">06</span>
+          <span class="project-name accent">Text Browser</span>
+        </div>
+        <span class="project-weeks">11 – 13</span>
+      </li>
+    </ul>
+
+    <div class="portfolio-note">
+      <span class="portfolio-star">★</span>
+      <span class="portfolio-text">portfolio</span>
+    </div>
+
+    <div class="description-section">
+      <!--<p class="description-label">Why this matters</p>!-->
+      <p class="description-text">
+My goal is a junior Python developer position by late 2026. This summer is about building things, understanding them deeply, and becoming the kind of developer who can reason from first principles — not just use them.
+</p> <br>
+      <p class="description-text"> I am currently completing Harvard CS50 and a discrete mathematics course covering linear algebra, combinatorics, graph theory, and probability, building a solid foundation in algorithms and data structures. Alongside this, I am working through a computer architecture course covering CPU internals, operating systems, and networking fundamentals.</p>
+
+
+
+</div>
+  </section>
+
+</main>
+
+</body>
+</html>
