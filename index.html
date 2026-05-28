@@ -276,17 +276,6 @@
             }
         }
     </style>
-
-    <!-- ТОЛЬКО ДЛЯ SAFARI - фикс Retina дисплея -->
-    <style>
-        @supports (-webkit-touch-callout: none) {
-            /* Этот хак срабатывает только в Safari на iOS/macOS */
-            html {
-                zoom: 1.2;
-                -webkit-zoom: 1.2;
-            }
-        }
-    </style>
 </head>
 <body>
     <header class="header">
@@ -379,12 +368,22 @@
     </main>
 
     <script>
-        // JavaScript фикс: применяем zoom только для Safari
-        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        // Точное определение Safari (не Chrome, не Edge, не Firefox)
+        function isSafari() {
+            const ua = navigator.userAgent;
+            const isSafariCheck = ua.indexOf('Safari') !== -1 && 
+                                   ua.indexOf('Chrome') === -1 && 
+                                   ua.indexOf('Edg') === -1 &&
+                                   ua.indexOf('Firefox') === -1;
+            return isSafariCheck;
+        }
         
-        if (isSafari) {
+        // Применяем zoom только для Safari на macOS
+        if (isSafari()) {
             document.documentElement.style.zoom = '1.2';
             console.log('Safari detected - applying zoom fix');
+        } else {
+            console.log('Not Safari - no zoom applied');
         }
         
         // Hover effects
