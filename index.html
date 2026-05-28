@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Romanenko Lesha · Summer 2026</title>
     
-    <!-- Fontsource CDN - Reliable font loading for GitHub Pages -->
+    <!-- Fontsource CDN for reliable font loading -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.0.0/index.css">
@@ -28,7 +29,10 @@
         }
 
         html {
-            font-size: 16px; /* Base font size - DO NOT change this */
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -39,6 +43,20 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        /* Safari-specific font fixes */
+        @supports (-webkit-appearance: none) {
+            html {
+                -webkit-text-size-adjust: none;
+            }
+            
+            body {
+                -webkit-text-size-adjust: none;
+            }
         }
 
         /* Header */
@@ -135,6 +153,26 @@
             text-transform: uppercase;
             margin-bottom: 1rem;
             color: var(--text-primary);
+        }
+
+        /* Why This Matters Section */
+        .why-matters {
+            margin-bottom: 3rem;
+        }
+
+        .why-matters h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .why-matters p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
         /* Stats Section */
@@ -256,6 +294,7 @@
             align-items: center;
             gap: 0.5rem;
             margin-top: 2rem;
+            margin-bottom: 2rem;
             font-size: 0.85rem;
             color: var(--accent-orange);
             text-decoration: none;
@@ -268,7 +307,6 @@
 
         /* Bio Section */
         .bio-section {
-            margin-top: 3rem;
             padding-top: 2rem;
             border-top: 2px solid var(--text-primary);
         }
@@ -284,10 +322,34 @@
             margin-bottom: 0;
         }
 
+        /* Safari-specific fixes for font sizes */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            .hero-title {
+                font-size: clamp(2.5rem, 8vw, 5rem) !important;
+            }
+            
+            .project-name {
+                font-size: 1.5rem !important;
+            }
+            
+            .stat-value {
+                font-size: 2rem !important;
+            }
+            
+            .projects-description,
+            .why-matters p {
+                font-size: 0.95rem !important;
+            }
+            
+            .bio-text {
+                font-size: 0.9rem !important;
+            }
+        }
+
         /* Responsive Typography */
         @media (max-width: 600px) {
             html {
-                font-size: 14px;
+                font-size: 16px;
             }
             
             .left-column,
@@ -339,12 +401,12 @@
                 <div class="projects-description">
                     <h3>Projects</h3>
                     <p>Six Python projects completed over 13 weeks, each chosen to build a specific skill: text formatting and string operations (Markdown Editor), string parsing and recursion (Regex Engine), data analysis with Pandas (HR Data Analysis), HTTP and web scraping (Translator, Web Scraper), and low-level browser implementation (Text Browser). Four projects are prepared as portfolio pieces with clean code, tests, and documentation on GitHub.</p>
-                <br>
-                    <h3>Why this matters</h3>
-                    <p>
-                  My goal is a junior Python developer position by late 2026. This summer is about building things, understanding them deeply, and becoming the kind of developer who can reason from first principles — not just use them.
-                </p>
-                  </div>
+                </div>
+
+                <div class="why-matters">
+                    <h3>Why This Matters</h3>
+                    <p>My goal is a junior Python developer position by late 2026. This summer is about building things, understanding them deeply, and becoming the kind of developer who can reason from first principles — not just use them.</p>
+                </div>
             </div>
 
             <div class="stats">
