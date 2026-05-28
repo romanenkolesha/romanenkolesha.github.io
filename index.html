@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Romanenko Lesha · Summer 2026</title>
     <!-- Fontsource CDN - Reliable font loading for GitHub Pages -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -22,13 +22,17 @@
             --accent-orange: #e85d2a;
             --border-color: #d4d2cd;
             --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-display: 'Space Grotesk', 'Inter', sans-serif;
+            --font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
         }
 
+        /* Фикс для Safari - устанавливаем базовый размер строго */
         html {
-            font-size: 16px; /* Base font size - DO NOT change this */
+            font-size: 16px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            text-size-adjust: 100%; /* Standard */
+            -webkit-text-size-adjust: 100%; /* Safari fix */
+            -moz-text-size-adjust: 100%;
         }
 
         body {
@@ -91,10 +95,10 @@
             }
         }
 
-        /* Hero Title */
+        /* Hero Title - переписан clamp для лучшей поддержки Safari */
         .hero-title {
             font-family: var(--font-display);
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: 5rem;
             font-weight: 700;
             line-height: 0.9;
             letter-spacing: -0.02em;
@@ -116,6 +120,31 @@
         .hero-title .line-3 {
             display: block;
             color: var(--accent-orange);
+        }
+
+        /* Responsive font sizes без clamp для Safari */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
         }
 
         /* Projects Description */
@@ -249,9 +278,8 @@
         }
 
         .color-orange {
-            color:var(--accent-orange);
+            color: var(--accent-orange);
         }
-
 
         /* Portfolio Link */
         .portfolio-link {
@@ -289,10 +317,6 @@
 
         /* Responsive Typography */
         @media (max-width: 600px) {
-            html {
-                font-size: 14px;
-            }
-            
             .left-column,
             .right-column {
                 padding: 1.5rem;
@@ -305,6 +329,10 @@
 
             .project-name {
                 font-size: 1.2rem;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
             }
         }
 
@@ -323,9 +351,6 @@
         <div class="header-left">
             <a href="#">Romanenko Lesha · Summer 2026</a>
         </div>
-        <!--<div class="header-right">
-            40 hrs / week
-        </div>-->
     </header>
 
     <!-- Main Content -->
@@ -372,39 +397,32 @@
         <section class="right-column">
             <div class="projects-list-header">
                 <span>Projects</span>
-                <!--<span>Weeks</span>-->
             </div>
 
             <div class="projects-list">
                 <div class="project-item">
                     <span class="project-number">01</span>
                     <span class="project-name">Markdown Editor</span>
-                    <!--<span class="project-weeks">1 – 2</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">02</span>
                     <span class="project-name">Regex Engine</span>
-                    <!--<span class="project-weeks">3 – 4</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">03</span>
                     <span class="project-name">HR Data Analysis</span>
-                    <!--<span class="project-weeks">5 – 6</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">04</span>
                     <span class="project-name">Translator</span>
-                    <!--<span class="project-weeks">7 – 8</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">05</span>
                     <span class="project-name color-orange">Web Scraper</span>
-                    <!--<span class="project-weeks">9 – 10</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">06</span>
                     <span class="project-name">Text Browser</span>
-                    <!--<span class="project-weeks">11 – 13</span>-->
                 </div>
             </div>
 
@@ -433,7 +451,7 @@
             });
         });
 
-        // Add hover effect to project items
+        // Add hover effect to project items with transform for Safari
         document.querySelectorAll('.project-item').forEach(item => {
             item.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateX(4px)';
@@ -445,4 +463,3 @@
     </script>
 </body>
 </html>
-
