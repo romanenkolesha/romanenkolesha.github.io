@@ -25,14 +25,12 @@
             --font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
         }
 
-        /* Фикс для Safari - устанавливаем базовый размер строго */
+        /* Жесткая фиксация базового размера для Safari */
         html {
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-size-adjust: 100%; /* Standard */
-            -webkit-text-size-adjust: 100%; /* Safari fix */
-            -moz-text-size-adjust: 100%;
+            font-size: 16px !important;
+            -webkit-text-size-adjust: none !important;
+            text-size-adjust: none !important;
+            -moz-text-size-adjust: none !important;
         }
 
         body {
@@ -41,6 +39,7 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            font-size: 16px;
         }
 
         /* Header */
@@ -48,9 +47,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: 16px 32px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 0.75rem;
+            font-size: 12px;
             font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
@@ -59,10 +58,12 @@
         .header-left a {
             color: var(--text-primary);
             text-decoration: none;
+            font-size: 12px;
         }
 
         .header-right {
             color: var(--text-secondary);
+            font-size: 12px;
         }
 
         /* Main Layout */
@@ -80,7 +81,7 @@
 
         /* Left Column */
         .left-column {
-            padding: 4rem;
+            padding: 64px;
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
@@ -89,20 +90,20 @@
 
         @media (max-width: 900px) {
             .left-column {
-                padding: 2rem;
+                padding: 32px;
                 border-right: none;
                 border-bottom: 1px solid var(--border-color);
             }
         }
 
-        /* Hero Title - переписан clamp для лучшей поддержки Safari */
+        /* Hero Title - абсолютные размеры */
         .hero-title {
             font-family: var(--font-display);
-            font-size: 5rem;
+            font-size: 80px;
             font-weight: 700;
             line-height: 0.9;
             letter-spacing: -0.02em;
-            margin-bottom: 3rem;
+            margin-bottom: 48px;
         }
 
         .hero-title .line-1 {
@@ -122,53 +123,59 @@
             color: var(--accent-orange);
         }
 
-        /* Responsive font sizes без clamp для Safari */
+        /* Responsive font sizes */
         @media (max-width: 1200px) {
             .hero-title {
-                font-size: 4rem;
+                font-size: 64px;
             }
         }
 
         @media (max-width: 900px) {
             .hero-title {
-                font-size: 3.5rem;
+                font-size: 56px;
             }
         }
 
         @media (max-width: 600px) {
             .hero-title {
-                font-size: 2.8rem;
+                font-size: 44px;
+                margin-bottom: 32px;
             }
         }
 
         @media (max-width: 480px) {
             .hero-title {
-                font-size: 2.2rem;
+                font-size: 36px;
             }
         }
 
         /* Projects Description */
         .projects-description {
-            font-size: 0.95rem;
+            font-size: 15px;
             color: var(--text-secondary);
             max-width: 480px;
-            margin-bottom: 3rem;
+            margin-bottom: 48px;
         }
 
         .projects-description h3 {
-            font-size: 0.75rem;
+            font-size: 12px;
             font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
             color: var(--text-primary);
+        }
+
+        .projects-description p {
+            font-size: 15px;
+            line-height: 1.6;
         }
 
         /* Stats Section */
         .stats {
             display: flex;
-            gap: 3rem;
-            padding-top: 2rem;
+            gap: 48px;
+            padding-top: 32px;
             border-top: 1px solid var(--border-color);
         }
 
@@ -178,30 +185,30 @@
         }
 
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 11px;
             font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
         }
 
         .stat-value {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 32px;
             font-weight: 700;
             color: var(--text-primary);
             line-height: 1;
         }
 
         .stat-sub {
-            font-size: 0.75rem;
+            font-size: 12px;
             color: var(--text-secondary);
-            margin-top: 0.25rem;
+            margin-top: 4px;
         }
 
         .stat-contact {
-            font-size: 0.8rem;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-primary);
             line-height: 1.3;
@@ -209,14 +216,14 @@
 
         /* Right Column */
         .right-column {
-            padding: 4rem;
+            padding: 64px;
             display: flex;
             flex-direction: column;
         }
 
         @media (max-width: 900px) {
             .right-column {
-                padding: 2rem;
+                padding: 32px;
             }
         }
 
@@ -224,44 +231,44 @@
         .projects-list-header {
             display: flex;
             justify-content: space-between;
-            font-size: 0.7rem;
+            font-size: 11px;
             font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             color: var(--text-secondary);
-            padding-bottom: 1rem;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
+            margin-bottom: 32px;
         }
 
         .project-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 0;
+            padding: 24px 0;
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .project-item:hover {
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding-left: 8px;
+            padding-right: 8px;
             background-color: rgba(232, 93, 42, 0.05);
-            margin: 0 -0.5rem;
+            margin: 0 -8px;
             border-bottom-color: var(--accent-orange);
         }
 
         .project-number {
-            font-size: 0.75rem;
+            font-size: 12px;
             color: var(--text-secondary);
-            width: 2rem;
+            width: 32px;
             flex-shrink: 0;
         }
 
         .project-name {
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 24px;
             font-weight: 600;
             color: var(--text-primary);
             flex-grow: 1;
@@ -272,7 +279,7 @@
         }
 
         .project-weeks {
-            font-size: 0.75rem;
+            font-size: 12px;
             color: var(--text-secondary);
             text-align: right;
         }
@@ -285,12 +292,16 @@
         .portfolio-link {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-            font-size: 0.85rem;
+            gap: 8px;
+            margin-top: 32px;
+            font-size: 14px;
             color: var(--accent-orange);
             text-decoration: none;
             font-style: italic;
+        }
+
+        .portfolio-link span {
+            font-size: 14px;
         }
 
         .portfolio-link:hover {
@@ -299,16 +310,16 @@
 
         /* Bio Section */
         .bio-section {
-            margin-top: 3rem;
-            padding-top: 2rem;
+            margin-top: 48px;
+            padding-top: 32px;
             border-top: 2px solid var(--text-primary);
         }
 
         .bio-text {
-            font-size: 0.9rem;
+            font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.7;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
         }
 
         .bio-text:last-child {
@@ -319,20 +330,37 @@
         @media (max-width: 600px) {
             .left-column,
             .right-column {
-                padding: 1.5rem;
+                padding: 24px;
             }
 
             .stats {
+                gap: 32px;
                 flex-wrap: wrap;
-                gap: 2rem;
             }
 
             .project-name {
-                font-size: 1.2rem;
+                font-size: 18px;
             }
             
             .stat-value {
-                font-size: 1.5rem;
+                font-size: 28px;
+            }
+            
+            .projects-description p,
+            .projects-description {
+                font-size: 14px;
+            }
+        }
+
+        /* Дополнительный фикс для Safari */
+        @media not all and (min-resolution:.001dpcm) { 
+            @supports (-webkit-appearance:none) {
+                html {
+                    font-size: 16px !important;
+                }
+                body {
+                    font-size: 16px;
+                }
             }
         }
 
@@ -367,12 +395,12 @@
                 <div class="projects-description">
                     <h3>Description</h3>
                     <p>Six Python projects completed over 13 weeks, each chosen to build a specific skill: text formatting and string operations (Markdown Editor), string parsing and recursion (Regex Engine), data analysis with Pandas (HR Data Analysis), HTTP and web scraping (Translator, Web Scraper), and low-level browser implementation (Text Browser). Four projects are prepared as portfolio pieces with clean code, tests, and documentation on GitHub.</p>
-                <br>
+                    <br>
                     <h3>Why this matters</h3>
                     <p>
-                  My goal is a junior Python developer position by late 2026. This summer is about building things, understanding them deeply, and becoming the kind of developer who can reason from first principles — not just use them.
-                </p>
-                  </div>
+                        My goal is a junior Python developer position by late 2026. This summer is about building things, understanding them deeply, and becoming the kind of developer who can reason from first principles — not just use them.
+                    </p>
+                </div>
             </div>
 
             <div class="stats">
@@ -440,6 +468,12 @@
     </main>
 
     <script>
+        // Фикс для Safari - принудительная установка базового размера через JS
+        if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+            document.documentElement.style.fontSize = '16px';
+            document.body.style.fontSize = '16px';
+        }
+
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -451,7 +485,7 @@
             });
         });
 
-        // Add hover effect to project items with transform for Safari
+        // Add hover effect to project items
         document.querySelectorAll('.project-item').forEach(item => {
             item.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateX(4px)';
