@@ -26,7 +26,7 @@
         }
 
         html {
-            font-size: 16px; /* Base font size - DO NOT change this */
+            font-size: 16px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -238,7 +238,8 @@
             flex-grow: 1;
         }
 
-        .project-item:nth-child(even) .project-name {
+        /* Оранжевый цвет только для проектов с классом color-orange */
+        .project-name.color-orange {
             color: var(--accent-orange);
         }
 
@@ -247,11 +248,6 @@
             color: var(--text-secondary);
             text-align: right;
         }
-
-        .color-orange {
-            color:var(--accent-orange);
-        }
-
 
         /* Portfolio Link */
         .portfolio-link {
@@ -323,9 +319,6 @@
         <div class="header-left">
             <a href="#">Romanenko Lesha · Summer 2026</a>
         </div>
-        <!--<div class="header-right">
-            40 hrs / week
-        </div>-->
     </header>
 
     <!-- Main Content -->
@@ -372,39 +365,32 @@
         <section class="right-column">
             <div class="projects-list-header">
                 <span>Projects</span>
-                <!--<span>Weeks</span>-->
             </div>
 
             <div class="projects-list">
                 <div class="project-item">
                     <span class="project-number">01</span>
                     <span class="project-name">Markdown Editor</span>
-                    <!--<span class="project-weeks">1 – 2</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">02</span>
                     <span class="project-name">Regex Engine</span>
-                    <!--<span class="project-weeks">3 – 4</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">03</span>
-                    <span class="project-name">HR Data Analysis</span>
-                    <!--<span class="project-weeks">5 – 6</span>-->
+                    <span class="project-name color-orange">HR Data Analysis</span>
                 </div>
                 <div class="project-item">
                     <span class="project-number">04</span>
                     <span class="project-name">Translator</span>
-                    <!--<span class="project-weeks">7 – 8</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">05</span>
                     <span class="project-name color-orange">Web Scraper</span>
-                    <!--<span class="project-weeks">9 – 10</span>-->
                 </div>
                 <div class="project-item">
                     <span class="project-number">06</span>
                     <span class="project-name">Text Browser</span>
-                    <!--<span class="project-weeks">11 – 13</span>-->
                 </div>
             </div>
 
