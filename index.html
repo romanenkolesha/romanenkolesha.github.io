@@ -422,6 +422,23 @@
     </main>
 
     <script>
+        // Проверка: это десктопный Safari (не мобильный)
+        function isDesktopSafari() {
+            const ua = navigator.userAgent;
+            const isSafari = ua.indexOf('Safari') !== -1 && ua.indexOf('Chrome') === -1;
+            const isMac = ua.indexOf('Mac') !== -1;
+            const isMobile = /iPhone|iPad|iPod/i.test(ua);
+            
+            // Десктопный Safari = это Safari, на Mac, НЕ мобильное устройство
+            return isSafari && isMac && !isMobile;
+        }
+        
+        // Только для десктопного Safari применяем zoom 1.25
+        if (isDesktopSafari()) {
+            document.documentElement.style.zoom = '1.25';
+            console.log('Desktop Safari detected - zoom 1.25 applied');
+        }
+        
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -445,4 +462,3 @@
     </script>
 </body>
 </html>
-
