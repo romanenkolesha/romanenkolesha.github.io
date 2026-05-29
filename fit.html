@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>June Flow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: #121214;
+            --text-main: #ffffff;
+            --text-muted: #444444;
+            
+            /* Mathical Palette */
+            --neon-pink: #F267E6;
+            --neon-blue: #5D5FE6;
+            --neon-lime: #D6F658;
+            --neon-orange: #F4A261;
+            --neon-purple: #9D86F6;
+            --weight-loss: #D6F658;
+            --weight-gain: #F4A261;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Header --- */
+        header {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        
+        .logo span { color: var(--neon-pink); }
+
+        /* --- Main Container --- */
+        .calendar-wrapper {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 40px;
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .month-header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .month-title {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .month-subtitle {
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* --- Workout Bubbles Grid --- */
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 20px;
+            justify-items: center;
+            margin-bottom: 30px;
+        }
+
+        .day-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .day-circle:hover {
+            transform: scale(1.1);
+            border-color: #444;
+        }
+
+        .day-circle.active {
+            border: none;
+            box-shadow: 0 0 15px currentColor;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- Legend --- */
+        .legend {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* --- Weight Chart Section --- */
+        .weight-section {
+            background: #1a1a1a;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .weight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .weight-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .current-weight-display {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--neon-blue);
+            text-align: right;
+        }
+
+        .weight-chart {
+            position: relative;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding: 0 10px;
+        }
+
+        .weight-scale {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 10px 0;
+        }
+
+        .weight-bars-container {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            margin-left: 60px;
+            height: 100%;
+            position: relative;
+        }
+
+        .weight-bar {
+            flex: 1;
+            background: #2a2a2a;
+            border-radius: 4px;
+            position: relative;
+            min-height: 5px;
+        }
+
+        .weight-bar.filled {
+            background: linear-gradient(180deg, var(--neon-blue) 0%, #3a3a8a 100%);
+        }
+
+        .weight-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        /* --- Progress Bar --- */
+        .progress-section {
+            padding: 25px;
+            background: #1a1a1a;
+            border-radius: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .progress-bar-container {
+            height: 20px;
+            background: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-lime) 0%, var(--neon-blue) 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .progress-labels span:first-child { color: var(--neon-lime); }
+        .progress-labels span:last-child { color: var(--neon-blue); }
+
+        /* --- Stats --- */
+        .stats-float {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 24px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .weight-loss { color: var(--weight-loss); }
+        .weight-gain { color: var(--weight-gain); }
+        .weight-neutral { color: var(--text-muted); }
+
+        @media (max-width: 600px) {
+            .days-grid { gap: 10px; }
+            .day-circle { width: 40px; height: 40px; }
+            .month-title { font-size: 2rem; }
+            .stats-float { flex-direction: column; }
+            .weight-chart { height: 150px; }
+            .legend { gap: 10px; }
+            .legend-item { font-size: 0.8rem; }
+            .user-name { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="user-name">Romanenko Lesha</div>
+        <div class="logo">summer <span>fit challenge</span></div>
+    </header>
+
+    <div class="calendar-wrapper">
+        <div class="month-header">
+            <div>
+                <div class="month-subtitle">workouts history</div>
+                <div class="month-title">JUNE</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="month-subtitle">2026</div>
+            </div>
+        </div>
+
+        <!-- Workout Circles -->
+        <div class="days-grid" id="grid-root"></div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background: var(--neon-lime)"></div>Cardio</div>
+            <div class="legend-item"><div class="legend-dot" style="background: var(--neon-pink)"></div>Strength</div>
+            <div class="legend-item"><div class="legend-dot" style="background: var(--neon-blue)"></div>Yoga</div>
+            <div class="legend-item"><div class="legend-dot" style="background: var(--neon-orange)"></div>Other</div>
+        </div>
+
+        <!-- Weight Chart -->
+        <div class="weight-section">
+            <div class="weight-header">
+                <div class="weight-title">Current Weight</div>
+                <div class="current-weight-display" id="current-weight-display">-- kg</div>
+            </div>
+            <div class="weight-chart">
+                <div class="weight-scale">
+                    <span>120</span>
+                    <span>115</span>
+                    <span>110</span>
+                    <span>105</span>
+                    <span>100</span>
+                </div>
+                <div class="weight-bars-container" id="weight-bars-root">
+                    <!-- Weight bars injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <div class="progress-title">Goal Progress</div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-labels">
+                <span>115 kg</span>
+                <span>100 kg</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-float">
+        <div class="stat-card">
+            <div class="stat-val" id="total-count" style="color: var(--neon-lime)">0</div>
+            <div class="stat-label">Workouts</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" id="weight-change">--</div>
+            <div class="stat-label">From June 1st</div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. DATA CONFIGURATION
+        // ==========================================
+        // 
+        // 📝 HOW TO EDIT:
+        // - Add your workout for each day using format: day_number: 'type'
+        // - Available types: 'cardio', 'strength', 'yoga', 'other'
+        // - Add your weight for specific days using format: day_number: weight_in_kg
+        // ==========================================
+        
+        // Colors for each workout type (don't change unless you want different colors)
+        const workoutColors = {
+            'cardio': 'var(--neon-lime)',
+            'strength': 'var(--neon-pink)',
+            'yoga': 'var(--neon-blue)',
+            'other': 'var(--neon-orange)'
+        };
+
+        // ==========================================
+        // 🏋️ WORKOUT DATA
+        // ==========================================
+        // Format: day_number: 'workout_type'
+        // Example: 1: 'strength' means Day 1 = Strength workout
+        // ==========================================
+        const juneData = {
+            // 1: 'strength', 
+            // 2: 'cardio', 
+            // 3: 'yoga', 
+            // 4: 'other',
+            // ... add more days as needed (1-30 for June)
+        };
+
+        // ==========================================
+        // ⚖️ WEIGHT DATA
+        // ==========================================
+        // Format: day_number: weight_in_kg
+        // Example: 1: 114.5 means Day 1 weight = 114.5 kg
+        // Only add days when you actually weigh yourself
+        // ==========================================
+        const weightLog = {
+            // 1: 114.5, 
+            // 5: 113.8,
+            // 10: 112.5,
+            // 15: 111.0, 
+            // ... add more days as needed
+        };
+
+        // ==========================================
+        // 🎯 GOAL SETTINGS
+        // ==========================================
+        // Edit these values to match your goals
+        // ==========================================
+        const weightStart = 115;    // Your starting weight goal
+        const weightGoal = 100;     // Your target weight goal
+        const chartMax = 120;       // Top value on weight chart
+        const chartMin = 100;       // Bottom value on weight chart
+
+        // ==========================================
+        // 2. RENDER LOGIC (Don't need to edit below)
+        // ==========================================
+
+        const gridRoot = document.getElementById('grid-root');
+        const weightBarsRoot = document.getElementById('weight-bars-root');
+        let workoutCount = 0;
+        let lastWeight = null;
+        let startingWeight = null;
+
+        function renderWorkouts() {
+            for (let i = 1; i <= 30; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'day-circle';
+                
+                const type = juneData[i];
+
+                if (type) {
+                    circle.classList.add('active');
+                    circle.style.backgroundColor = workoutColors[type];
+                    circle.style.color = workoutColors[type];
+                    workoutCount++;
+                }
+
+                circle.title = type ? `Day ${i}: ${type}` : `Day ${i}: Rest`;
+                gridRoot.appendChild(circle);
+            }
+
+            document.getElementById('total-count').innerText = workoutCount;
+        }
+
+        function renderWeightChart() {
+            // Get starting weight (June 1st)
+            startingWeight = weightLog[1] || 0;
+
+            for (let i = 1; i <= 30; i++) {
+                const weight = weightLog[i];
+                
+                const bar = document.createElement('div');
+                bar.className = 'weight-bar';
+                
+                if (weight) {
+                    bar.classList.add('filled');
+                    
+                    const percentage = ((weight - chartMin) / (chartMax - chartMin)) * 100;
+                    bar.style.height = `${percentage}%`;
+                    
+                    const dot = document.createElement('div');
+                    dot.className = 'weight-dot';
+                    bar.appendChild(dot);
+                    
+                    lastWeight = weight;
+                } else {
+                    bar.style.height = '5px';
+                }
+                
+                bar.title = weight ? `Day ${i}: ${weight} kg` : `Day ${i}: No data`;
+                weightBarsRoot.appendChild(bar);
+            }
+
+            // Update displays
+            if (lastWeight && startingWeight) {
+                // TOP: Show absolute current weight
+                document.getElementById('current-weight-display').innerText = `${lastWeight} kg`;
+                
+                // BOTTOM: Show weight change with + or - sign
+                const weightDiff = lastWeight - startingWeight;
+                const sign = weightDiff >= 0 ? '+' : '-';
+                const absDiff = Math.abs(weightDiff).toFixed(1);
+                
+                // Color based on loss or gain
+                let colorClass = 'weight-neutral';
+                if (weightDiff < 0) {
+                    colorClass = 'weight-loss'; // Green for loss
+                } else if (weightDiff > 0) {
+                    colorClass = 'weight-gain'; // Orange for gain
+                }
+
+                const displayText = `${sign}${absDiff} kg`;
+                document.getElementById('weight-change').innerHTML = `<span class="${colorClass}">${displayText}</span>`;
+                
+                // Calculate progress (weightStart -> weightGoal)
+                const progress = ((weightStart - lastWeight) / (weightStart - weightGoal)) * 100;
+                const clampedProgress = Math.max(0, Math.min(100, progress));
+                document.getElementById('progress-fill').style.width = `${clampedProgress}%`;
+            }
+        }
+
+        renderWorkouts();
+        renderWeightChart();
+    </script>
+</body>
+</html>
