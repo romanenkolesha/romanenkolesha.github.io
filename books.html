@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Library Stack</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #111111;
+            --font-sans: 'Manrope', sans-serif;
+            --font-serif: 'Merriweather', serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #ffffff;
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .book-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .book {
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            
+            width: var(--b-width);
+            height: var(--b-height);
+            background-color: var(--b-color);
+            max-width: 100%;
+            box-sizing: border-box;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .book:hover {
+            transform: scale(1.01);
+            z-index: 10;
+        }
+
+        /* Название */
+        .book-title {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+            
+            flex-shrink: 1;
+            opacity: 0.9;
+            min-width: 0;
+            /* Важно для кроссбраузерности */
+            display: block;
+            max-width: 100%;
+        }
+
+        /* Автор */
+        .book-author {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.95;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+            
+            text-align: right;
+            flex-shrink: 1;
+            min-width: 0;
+            /* Важно для кроссбраузерности */
+            display: block;
+            max-width: 100%;
+            
+            transition: opacity 0.2s ease;
+        }
+
+        /* Класс для скрытия автора */
+        .book-author.hidden {
+            display: none;
+        }
+
+        /* --- МОБИЛЬНАЯ ВЕРСИЯ --- */
+        @media (max-width: 600px) {
+            .book {
+                padding: 0 10px;
+            }
+            
+            .book-title {
+                letter-spacing: 0.2px;
+            }
+            
+            .book-author {
+                letter-spacing: 0.3px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="book-stack" id="stackContainer"></div>
+
+    <script>
+        const booksData = [
+            { 
+                title: "To Kill a Mockingbird", 
+                author: "Harper Lee", 
+                width: "65%", 
+                height: "60px", 
+                color: "#F4F1DE",
+                font: "sans",
+                bold: true,
+                italic: false,
+                underlineTitle: false
+            },
+            { 
+                title: "1984", 
+                author: "George Orwell", 
+                width: "50%", 
+                height: "50px", 
+                color: "#FF5733",
+                font: "sans",
+                bold: true,
+                italic: false,
+                underlineTitle: false
+            },
+            { 
+                title: "Pride and Prejudice", 
+                author: "Jane Austen", 
+                width: "70%", 
+                height: "65px", 
+                color: "#AECBEB",
+                font: "serif",
+                bold: true,
+                italic: false,
+                underlineTitle: false
+            },
+            { 
+                title: "The Great Gatsby", 
+                author: "F. Scott Fitzgerald", 
+                width: "45%", 
+                height: "55px", 
+                color: "#5D54A4",
+                font: "serif",
+                bold: false,
+                italic: true,
+                underlineTitle: false
+            },
+            { 
+                title: "One Hundred Years of Solitude", 
+                author: "G. García Márquez", 
+                width: "80%", 
+                height: "70px", 
+                color: "#1DB954",
+                font: "sans",
+                bold: true,
+                italic: false,
+                underlineTitle: false
+            },
+            { 
+                title: "Преступление и наказание", 
+                author: "Ф. Достоевский", 
+                width: "60%", 
+                height: "60px", 
+                color: "#333333",
+                font: "serif",
+                bold: true,
+                italic: false,
+                underlineTitle: true
+            },
+            { 
+                title: "Анна Каренина", 
+                author: "Лев Толстой", 
+                width: "55%", 
+                height: "58px", 
+                color: "#FB5607",
+                font: "serif",
+                bold: true,
+                italic: true,
+                underlineTitle: false
+            },
+            { 
+                title: "Мастер и Маргарита", 
+                author: "М. Булгаков", 
+                width: "75%", 
+                height: "62px", 
+                color: "#8338EC",
+                font: "sans",
+                bold: true,
+                italic: false,
+                underlineTitle: false
+            },
+            { 
+                title: "Евгений Онегин", 
+                author: "А. Пушкин", 
+                width: "40%", 
+                height: "45px", 
+                color: "#FEF9D3",
+                font: "serif",
+                bold: true,
+                italic: false,
+                underlineTitle: false
+            }
+        ];
+
+        const container = document.getElementById('stackContainer');
+        const MIN_FONT_SIZE = 7;
+        const MAX_FONT_SIZE = 16;
+        const MIN_GAP = 50; // Ещё больше зазор для запаса
+        const BROWSER_BUFFER = 1.05; // 5% запас для разных браузеров
+
+        function fitTextToContainer(titleEl, authorEl) {
+            let currentSize = MAX_FONT_SIZE;
+            
+            // Сбрасываем скрытие автора
+            authorEl.classList.remove('hidden');
+            authorEl.style.display = 'block';
+            
+            // Используем getBoundingClientRect для кроссбраузерности
+            function getTextWidth(element) {
+                const range = document.createRange();
+                range.selectNodeContents(element);
+                const rect = range.getBoundingClientRect();
+                return rect.width;
+            }
+            
+            // Проверяем влезает ли текст с зазором
+            function checkFits(size) {
+                titleEl.style.fontSize = size + 'px';
+                authorEl.style.fontSize = size + 'px';
+                
+                // Force reflow для Chrome
+                void titleEl.offsetWidth;
+                void authorEl.offsetWidth;
+                
+                const titleWidth = getTextWidth(titleEl) * BROWSER_BUFFER;
+                const authorWidth = getTextWidth(authorEl) * BROWSER_BUFFER;
+                const containerWidth = titleEl.parentElement.clientWidth;
+                
+                const totalWidth = titleWidth + authorWidth + MIN_GAP;
+                
+                return totalWidth <= containerWidth;
+            }
+            
+            // Проверяем вылезает ли текст за границы
+            function checkOverflow() {
+                const containerWidth = titleEl.parentElement.clientWidth;
+                const titleWidth = getTextWidth(titleEl) * BROWSER_BUFFER;
+                const authorWidth = getTextWidth(authorEl) * BROWSER_BUFFER;
+                return titleWidth > containerWidth || authorWidth > containerWidth;
+            }
+            
+            // Шаг 1: Уменьшаем шрифт пока оба текста не влезут с зазором
+            while (!checkFits(currentSize) && currentSize > MIN_FONT_SIZE) {
+                currentSize -= 0.5;
+            }
+            
+            // Шаг 2: Если при минимальном шрифте всё ещё не влезает - скрываем автора
+            if (!checkFits(currentSize) || checkOverflow()) {
+                authorEl.classList.add('hidden');
+                
+                // Теперь подгоняем только название на всю ширину
+                currentSize = MAX_FONT_SIZE;
+                while (currentSize > MIN_FONT_SIZE) {
+                    titleEl.style.fontSize = currentSize + 'px';
+                    void titleEl.offsetWidth; // Force reflow
+                    
+                    if (getTextWidth(titleEl) * BROWSER_BUFFER <= titleEl.parentElement.clientWidth) {
+                        break;
+                    }
+                    currentSize -= 0.5;
+                }
+            }
+            
+            // Финальная защита от overflow
+            if (checkOverflow()) {
+                titleEl.style.fontSize = MIN_FONT_SIZE + 'px';
+            }
+        }
+
+        function createBookElement(data) {
+            const bookDiv = document.createElement('div');
+            bookDiv.className = 'book';
+            
+            bookDiv.style.setProperty('--b-width', data.width);
+            bookDiv.style.setProperty('--b-height', data.height);
+            bookDiv.style.setProperty('--b-color', data.color);
+            
+            const fontFamily = data.font === "serif" ? "var(--font-serif)" : "var(--font-sans)";
+            bookDiv.style.fontFamily = fontFamily;
+            bookDiv.style.fontWeight = data.bold ? "800" : "400";
+            bookDiv.style.fontStyle = data.italic ? "italic" : "normal";
+            
+            const lightColors = ["#F4F1DE", "#AECBEB", "#FEF9D3"];
+            const isLight = lightColors.includes(data.color);
+            bookDiv.style.color = isLight ? "#111" : "#fff";
+
+            const titleStyle = data.underlineTitle ? "text-decoration: underline;" : "";
+
+            bookDiv.innerHTML = `
+                <div class="book-title" style="${titleStyle}">${data.title}</div>
+                <div class="book-author">${data.author}</div>
+            `;
+
+            return bookDiv;
+        }
+
+        function renderBooks() {
+            container.innerHTML = '';
+            booksData.forEach(book => {
+                const bookEl = createBookElement(book);
+                container.appendChild(bookEl);
+            });
+        }
+
+        // Ждём полной загрузки шрифтов перед рендером
+        async function init() {
+            await document.fonts.ready;
+            renderBooks();
+            
+            // Небольшая задержка после рендера для Chrome
+            setTimeout(() => {
+                document.querySelectorAll('.book').forEach(book => {
+                    const titleEl = book.querySelector('.book-title');
+                    const authorEl = book.querySelector('.book-author');
+                    
+                    fitTextToContainer(titleEl, authorEl);
+                });
+            }, 100);
+        }
+
+        init();
+
+        // Пересчитываем размеры при изменении окна
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                document.querySelectorAll('.book').forEach(book => {
+                    const titleEl = book.querySelector('.book-title');
+                    const authorEl = book.querySelector('.book-author');
+                    
+                    fitTextToContainer(titleEl, authorEl);
+                });
+            }, 150);
+        });
+    </script>
+</body>
+</html>
