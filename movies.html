@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watched Movies</title>
+    <style>
+        /* --- RESET & BASE --- */
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #000000;
+            --text-sub: #888888;
+            --line-color: #e5e5e5;
+            --hover-bg: #f9f9f9;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 60px 20px; /* Чуть больше отступ сверху */
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- PAGE TITLE --- */
+        .page-title {
+            font-size: 80px; /* Очень крупный заголовок */
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 40px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        /* --- TABLE GRID --- */
+        .movie-list {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid var(--line-color);
+        }
+
+        /* Headers */
+        .header-row {
+            display: grid;
+            grid-template-columns: 3fr 2fr 1.5fr 1fr; 
+            padding: 30px 0;
+            border-bottom: 1px solid var(--line-color);
+            font-size: 20px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: color 0.2s ease;
+            user-select: none;
+            align-items: center;
+        }
+
+        .header-row:hover {
+            color: var(--text-main);
+        }
+
+        .col-header.active-col {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Data Rows */
+        .movie-row {
+            display: grid;
+            grid-template-columns: 3fr 2fr 1.5fr 1fr;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--line-color);
+            align-items: center;
+            transition: background-color 0.2s ease;
+            cursor: default;
+        }
+
+        .movie-row:last-child {
+            border-bottom: none;
+        }
+
+        .movie-row:hover {
+            background-color: var(--hover-bg);
+        }
+
+        /* Column Styling */
+        .col {
+            padding-right: 20px;
+        }
+
+        .col-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .movie-row .col-director, 
+        .movie-row .col-country, 
+        .movie-row .col-year {
+            font-size: 20px;
+            color: var(--text-sub);
+            transition: color 0.2s;
+        }
+        
+        .movie-row:hover .col-director,
+        .movie-row:hover .col-country,
+        .movie-row:hover .col-year {
+            color: var(--text-main);
+        }
+
+        .col-year {
+            text-align: right;
+            justify-self: end;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 0;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+
+            /* Уменьшаем заголовок на мобильных */
+            .page-title {
+                font-size: 48px;
+                margin-bottom: 30px;
+            }
+
+            /* Скрываем Country и Year на мобильных */
+            .col-country, .col-year, 
+            .header-row > div:nth-child(3), 
+            .header-row > div:nth-child(4) {
+                display: none;
+            }
+
+            .header-row, .movie-row {
+                grid-template-columns: 1fr 1.5fr;
+            }
+            
+            .header-row {
+                font-size: 16px;
+                padding: 20px 0;
+            }
+            .col-title, .col-director {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Добавлен заголовок -->
+        <h1 class="page-title">Movies</h1>
+
+        <div class="movie-list">
+            <!-- Headers -->
+            <div class="header-row" id="headerRow">
+                <div class="col col-header" data-sort="title">Title</div>
+                <div class="col col-header" data-sort="director">Director</div>
+                <div class="col col-header" data-sort="country">Country</div>
+                <div class="col col-header col-year" data-sort="year">Year</div>
+            </div>
+
+            <!-- Content -->
+            <div id="moviesContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // DATA: ADD MOVIES HERE
+        // ==========================================
+        const movieData = [
+            {
+                title: "Dune: Part Two",
+                director: "Denis Villeneuve",
+                country: "USA",
+                year: 2024
+            },
+            {
+                title: "Oppenheimer",
+                director: "Christopher Nolan",
+                country: "USA",
+                year: 2023
+            },
+            {
+                title: "Parasite",
+                director: "Bong Joon-ho",
+                country: "South Korea",
+                year: 2019
+            },
+            {
+                title: "The Godfather",
+                director: "Francis Ford Coppola",
+                country: "USA",
+                year: 1972
+            },
+            {
+                title: "Amélie",
+                director: "Jean-Pierre Jeunet",
+                country: "France",
+                year: 2001
+            },
+            {
+                title: "Everything Everywhere All at Once",
+                director: "Daniel Kwan",
+                country: "USA",
+                year: 2022
+            },
+            {
+                title: "Spirited Away",
+                director: "Hayao Miyazaki",
+                country: "Japan",
+                year: 2001
+            },
+            {
+                title: "Mad Max: Fury Road",
+                director: "George Miller",
+                country: "Australia",
+                year: 2015
+            }
+        ];
+
+        // ==========================================
+        // LOGIC
+        // ==========================================
+        
+        let currentSort = { key: null, direction: null };
+
+        const container = document.getElementById('moviesContainer');
+        const headers = document.querySelectorAll('.col-header');
+
+        function renderMovies(data) {
+            container.innerHTML = '';
+            
+            data.forEach(movie => {
+                const row = document.createElement('div');
+                row.className = 'movie-row';
+                row.innerHTML = `
+                    <div class="col col-title">${movie.title}</div>
+                    <div class="col col-director">${movie.director}</div>
+                    <div class="col col-country">${movie.country}</div>
+                    <div class="col col-year">${movie.year}</div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function sortData(key) {
+            if (currentSort.key === key) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.key = key;
+                currentSort.direction = key === 'year' ? 'desc' : 'asc'; 
+            }
+
+            movieData.sort((a, b) => {
+                let valA = a[key];
+                let valB = b[key];
+
+                if (currentSort.direction === 'asc') {
+                    return valA > valB ? 1 : -1;
+                } else {
+                    return valA < valB ? 1 : -1;
+                }
+            });
+
+            updateHeaderStyles();
+            renderMovies(movieData);
+        }
+
+        function updateHeaderStyles() {
+            headers.forEach(header => {
+                const key = header.dataset.sort;
+                header.innerText = key.charAt(0).toUpperCase() + key.slice(1);
+
+                if (key === currentSort.key) {
+                    header.classList.add('active-col');
+                    header.innerText += (currentSort.direction === 'asc' ? ' ▲' : ' ▼');
+                } else {
+                    header.classList.remove('active-col');
+                }
+            });
+        }
+
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const key = header.dataset.sort;
+                sortData(key);
+            });
+        });
+
+        renderMovies(movieData);
+
+    </script>
+</body>
+</html>
