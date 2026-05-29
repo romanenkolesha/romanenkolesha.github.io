@@ -11,7 +11,7 @@
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%230a0a0a'/%3E%3Crect x='35' y='40' width='40' height='100' rx='4' fill='%234242e8'/%3E%3Crect x='55' y='40' width='40' height='100' rx='4' fill='%23f44336'/%3E%3Crect x='75' y='40' width='40' height='100' rx='4' fill='%234caf50'/%3E%3Crect x='95' y='40' width='40' height='100' rx='4' fill='%23f57c00'/%3E%3C/svg%3E">
 
-    <!-- Google Fonts: Inter и Playfair Display -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
 
         :root {
             --bg: #0a0a0a;
-            --radius: 8px; /* Чуть больше скругление как на скриншоте */
+            --radius: 8px;
         }
 
         html { scroll-behavior: smooth; }
@@ -132,17 +132,33 @@
             from { opacity: 0; transform: translateX(-20px) scaleX(0.8); }
         }
 
+        /* ===== MOBILE: hide author ===== */
         @media (max-width: 768px) {
             .header { padding: max(48px, env(safe-area-inset-top)) 16px 24px; }
+
             .book-stack-container { padding: 0 16px; gap: 6px; }
-            .book { padding: 0 16px; }
-            .book-title { font-size: 13px; }
-            .book-author { font-size: 11px; }
+
+            .book {
+                padding: 0 16px;
+                border-radius: 6px;
+            }
+
+            .book-title {
+                font-size: 13px;
+                padding-right: 0;
+            }
+
+            .book-author {
+                display: none; /* Скрываем автора на мобильных */
+            }
+
+            .counter {
+                padding: 48px 16px max(52px, env(safe-area-inset-bottom));
+            }
         }
 
         @media (max-width: 480px) {
             .book-title { font-size: 12px; }
-            .book-author { font-size: 10px; max-width: 50%; }
             .book { padding: 0 12px; }
         }
     </style>
@@ -160,30 +176,17 @@
     </div>
 
     <script>
-        // ============================================
-        // НАСТРОЙКИ ШРИФТОВ
-        // ============================================
-        // serif: "Playfair Display"
-        // sans:  "Inter"
-        
-        // ============================================
-        // ДАННЫЕ КНИГ
-        // ============================================
         const books = [
             {
                 id: 1,
                 title: "To Kill a Mockingbird",
                 author: "Harper Lee",
                 color: "#e05644",
-                width: 100, // На скриншоте почти полная ширина
+                width: 100,
                 height: 64,
                 style: {
                     italic: true,
-                    underline: false,
-                    wideSpacing: false,
-                    spacingValue: "0px",
-                    fontFamily: "Playfair Display", // Serif
-                    fontWeight: "600"
+                    fontFamily: "Playfair Display"
                 }
             },
             {
@@ -194,13 +197,8 @@
                 width: 92,
                 height: 56,
                 style: {
-                    italic: false,
-                    underline: false,
-                    wideSpacing: false,
-                    spacingValue: "0px",
-                    fontFamily: "Inter", // Sans
                     fontWeight: "700",
-                    colorTitle: "#1a1a1a", // Темный текст на светлом фоне
+                    colorTitle: "#1a1a1a",
                     colorAuthor: "#333333"
                 }
             },
@@ -210,15 +208,7 @@
                 author: "Jane Austen",
                 color: "#e08534",
                 width: 84,
-                height: 60,
-                style: {
-                    italic: false,
-                    underline: false,
-                    wideSpacing: false,
-                    spacingValue: "0px",
-                    fontFamily: "Inter", // Sans
-                    fontWeight: "600"
-                }
+                height: 60
             },
             {
                 id: 4,
@@ -228,11 +218,8 @@
                 width: 96,
                 height: 62,
                 style: {
-                    italic: false,
-                    underline: false,
                     wideSpacing: true,
-                    spacingValue: "6px", // Широкий интервал
-                    fontFamily: "Inter", // Sans
+                    spacingValue: "6px",
                     fontWeight: "700",
                     colorTitle: "#1a1a1a",
                     colorAuthor: "#333333"
@@ -244,15 +231,7 @@
                 author: "Gabriel García Márquez",
                 color: "#4648e1",
                 width: 78,
-                height: 58,
-                style: {
-                    italic: false,
-                    underline: false,
-                    wideSpacing: false,
-                    spacingValue: "0px",
-                    fontFamily: "Inter", // Sans
-                    fontWeight: "600"
-                }
+                height: 58
             },
             {
                 id: 6,
@@ -260,15 +239,7 @@
                 author: "Фёдор Достоевский",
                 color: "#5ca65c",
                 width: 100,
-                height: 68,
-                style: {
-                    italic: false,
-                    underline: false,
-                    wideSpacing: false,
-                    spacingValue: "0px",
-                    fontFamily: "Inter", // Sans
-                    fontWeight: "600"
-                }
+                height: 68
             },
             {
                 id: 7,
@@ -278,11 +249,6 @@
                 width: 74,
                 height: 54,
                 style: {
-                    italic: false,
-                    underline: false,
-                    wideSpacing: false,
-                    spacingValue: "0px",
-                    fontFamily: "Inter", // Sans
                     fontWeight: "700",
                     colorTitle: "#1a1a1a",
                     colorAuthor: "#333333"
@@ -296,11 +262,6 @@
                 width: 98,
                 height: 70,
                 style: {
-                    italic: false,
-                    underline: true,
-                    wideSpacing: false,
-                    spacingValue: "0px",
-                    fontFamily: "Playfair Display", // Serif
                     fontWeight: "700",
                     colorTitle: "#1a1a1a",
                     colorAuthor: "#333333"
@@ -312,21 +273,10 @@
                 author: "Александр Пушкин",
                 color: "#1e2875",
                 width: 86,
-                height: 56,
-                style: {
-                    italic: false,
-                    underline: false,
-                    wideSpacing: false,
-                    spacingValue: "0px",
-                    fontFamily: "Inter", // Sans
-                    fontWeight: "600"
-                }
+                height: 56
             }
         ];
 
-        // ============================================
-        // RENDER
-        // ============================================
         function renderBooks() {
             const stack = document.getElementById('bookStack');
             stack.innerHTML = '';
@@ -338,7 +288,7 @@
                 el.style.width = book.width + '%';
                 el.style.minHeight = book.height + 'px';
                 el.style.animationDelay = (index * 0.05) + 's';
-                el.style.borderRadius = '8px'; // Скругление как на скриншоте
+                el.style.borderRadius = '8px';
 
                 const s = {
                     italic: false,
@@ -350,13 +300,10 @@
                     ...(book.style || {})
                 };
 
-                // Определение цвета текста
                 const isLight = isColorLight(book.color);
                 const textColor = s.colorTitle || (isLight ? '#1a1a1a' : '#ffffff');
                 const authorColor = s.colorAuthor || (isLight ? '#333333' : 'rgba(255,255,255,0.9)');
 
-                // Формирование font-family строки
-                // Используем одинарные кавычки внутри строки, чтобы избежать конфликтов с HTML атрибутами
                 let fontName = s.fontFamily;
                 if (fontName === "Inter") fontName = "'Inter', sans-serif";
                 else if (fontName === "Playfair Display") fontName = "'Playfair Display', serif";
@@ -366,10 +313,7 @@
                 const underline = s.underline ? 'underline' : 'none';
                 const spacing = s.wideSpacing ? s.spacingValue : '0px';
 
-                // Inline styles для заголовка
                 const titleStyle = `color:${textColor};font-family:${fontName};font-style:${italic};text-decoration:${underline};letter-spacing:${spacing};font-weight:${s.fontWeight};`;
-                
-                // Inline styles для автора (автор обычно не italic, если не указано иное, но сделаем гибко)
                 const authorStyle = `color:${authorColor};font-family:${fontName};font-style:normal;text-decoration:${underline};letter-spacing:${spacing};font-weight:${s.fontWeight};`;
 
                 el.innerHTML = `
