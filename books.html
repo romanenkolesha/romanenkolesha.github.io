@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Library Stack</title>
     
-    <!-- Шрифт Manrope (поддержка RU/EN) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
@@ -13,13 +12,12 @@
     <style>
         :root {
             --bg-color: #111111;
-            --text-color: #ffffff;
             --font-main: 'Manrope', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: #ffffff;
             font-family: var(--font-main);
             margin: 0;
             padding: 40px 20px;
@@ -29,31 +27,29 @@
             min-height: 100vh;
         }
 
-        /* Контейнер стопки */
         .book-stack {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px; /* Отступ между книгами по вертикали */
+            gap: 15px;
             width: 100%;
             max-width: 900px;
         }
 
-        /* Стиль книги */
         .book {
-            border-radius: 4px; /* Слегка скругленные углы */
+            border-radius: 4px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 24px;
+            padding: 0 16px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
             
-            /* Эти значения будут перезаписаны из JS */
             width: var(--b-width);
             height: var(--b-height);
             background-color: var(--b-color);
             
-            transition: transform 0.2s ease;
+            box-sizing: border-box; 
+            overflow: hidden;
+            white-space: nowrap; 
         }
 
         .book:hover {
@@ -61,43 +57,35 @@
             z-index: 10;
         }
 
-        /* Левая часть: Название */
         .book-title {
-            font-size: 14px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            max-width: 60%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             opacity: 0.9;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            margin-right: 8px;
+            transition: font-size 0.1s; 
         }
 
-        /* Правая часть: Автор */
         .book-author {
-            font-size: 20px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.95;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            
+            margin-left: auto;
+            flex-shrink: 0;
+            transition: font-size 0.1s;
         }
 
-        /* Адаптивность для мобильных */
+        /* Класс для скрытия автора, если не влезает */
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 600px) {
             .book {
-                /* На мобильном можно принудительно задать ширину, 
-                   если книги из кода слишком широкие, или оставить как есть */
-                width: 90% !important; 
-                padding: 0 16px;
-            }
-            .book-title {
-                font-size: 12px;
-            }
-            .book-author {
-                font-size: 16px;
+                width: 95% !important;
+                padding: 0 12px;
             }
         }
     </style>
@@ -107,122 +95,101 @@
     <div class="book-stack" id="stackContainer"></div>
 
     <script>
-        // ============================================================
-        // НАСТРОЙКИ КНИГ (Редактируйте этот список)
-        // ============================================================
-        // width: ширина в процентах (%) или пикселях (px)
-        // height: высота в пикселях (px)
-        // color: цвет в формате HEX (#RRGGBB)
-        // ============================================================
-        
         const booksData = [
-            { 
-                title: "To Kill a Mockingbird", 
-                author: "Harper Lee", 
-                width: "65%", 
-                height: "60px", 
-                color: "#F4F1DE" // Светлый фон
-            },
-            { 
-                title: "1984", 
-                author: "George Orwell", 
-                width: "50%", 
-                height: "50px", 
-                color: "#FF5733" // Оранжевый
-            },
-            { 
-                title: "Pride and Prejudice", 
-                author: "Jane Austen", 
-                width: "70%", 
-                height: "65px", 
-                color: "#AECBEB" // Голубой
-            },
-            { 
-                title: "The Great Gatsby", 
-                author: "F. Scott Fitzgerald", 
-                width: "45%", 
-                height: "55px", 
-                color: "#5D54A4" // Фиолетовый
-            },
-            { 
-                title: "One Hundred Years of Solitude", 
-                author: "G. García Márquez", 
-                width: "80%", 
-                height: "70px", 
-                color: "#1DB954" // Зеленый
-            },
-            { 
-                title: "Преступление и наказание", 
-                author: "Ф. Достоевский", 
-                width: "60%", 
-                height: "60px", 
-                color: "#333333" // Темный
-            },
-            { 
-                title: "Анна Каренина", 
-                author: "Лев Толстой", 
-                width: "55%", 
-                height: "58px", 
-                color: "#FB5607" // Красно-оранжевый
-            },
-            { 
-                title: "Мастер и Маргарита", 
-                author: "М. Булгаков", 
-                width: "75%", 
-                height: "62px", 
-                color: "#8338EC" // Яркий фиолетовый
-            },
-            { 
-                title: "Евгений Онегин", 
-                author: "А. Пушкин", 
-                width: "40%", 
-                height: "45px", 
-                color: "#FEF9D3" // Желтый
-            }
+            { title: "To Kill a Mockingbird", author: "Harper Lee", width: "65%", height: "60px", color: "#F4F1DE" },
+            { title: "1984", author: "George Orwell", width: "50%", height: "50px", color: "#FF5733" },
+            { title: "Pride and Prejudice", author: "Jane Austen", width: "70%", height: "65px", color: "#AECBEB" },
+            { title: "The Great Gatsby", author: "F. Scott Fitzgerald", width: "45%", height: "55px", color: "#5D54A4" },
+            { title: "One Hundred Years of Solitude", author: "G. García Márquez", width: "80%", height: "70px", color: "#1DB954" },
+            { title: "Преступление и наказание", author: "Ф. Достоевский", width: "60%", height: "60px", color: "#333333" },
+            { title: "Анна Каренина", author: "Лев Толстой", width: "55%", height: "58px", color: "#FB5607" },
+            { title: "Мастер и Маргарита", author: "М. Булгаков", width: "75%", height: "62px", color: "#8338EC" },
+            { title: "Евгений Онегин", author: "А. Пушкин", width: "40%", height: "45px", color: "#FEF9D3" }
         ];
 
         const container = document.getElementById('stackContainer');
 
-        // Функция создания книги
         function createBookElement(data) {
             const bookDiv = document.createElement('div');
             bookDiv.className = 'book';
             
-            // Применяем стили из данных
             bookDiv.style.setProperty('--b-width', data.width);
             bookDiv.style.setProperty('--b-height', data.height);
             bookDiv.style.setProperty('--b-color', data.color);
             
-            // Автоматическая настройка цвета текста (черный для светлых фонов, белый для темных)
-            // Простая проверка на конкретные светлые цвета из вашего списка
             const lightColors = ["#F4F1DE", "#AECBEB", "#FEF9D3"];
             const isLight = lightColors.includes(data.color);
-            
-            const textColor = isLight ? "#111" : "#fff";
-            const textShadow = isLight ? "none" : "0 1px 2px rgba(0,0,0,0.3)";
+            bookDiv.style.color = isLight ? "#111" : "#fff";
 
-            bookDiv.style.color = textColor;
-            bookDiv.style.textShadow = textShadow;
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'book-title';
+            titleDiv.textContent = data.title;
 
-            bookDiv.innerHTML = `
-                <div class="book-title">${data.title}</div>
-                <div class="book-author">${data.author}</div>
-            `;
+            const authorDiv = document.createElement('div');
+            authorDiv.className = 'book-author';
+            authorDiv.textContent = data.author;
+
+            bookDiv.appendChild(titleDiv);
+            bookDiv.appendChild(authorDiv);
+
+            container.appendChild(bookDiv);
+            adjustFontSize(bookDiv, titleDiv, authorDiv);
 
             return bookDiv;
         }
 
-        // Отрисовка
+        // Функция подгонки шрифта
+        function adjustFontSize(book, title, author) {
+            let fontSize = 16; // Начальный размер шрифта (пиксели)
+            const minFontSize = 9; // Минимальный размер
+            const paddingBuffer = 32; // Запас на отступы книги
+
+            // 1. Попытка уменьшить шрифт, чтобы влезло всё (название + автор)
+            while (fontSize >= minFontSize) {
+                title.style.fontSize = `${fontSize}px`;
+                author.style.fontSize = `${fontSize * 1.3}px`; // Автор всегда чуть крупнее
+
+                const totalTextWidth = title.scrollWidth + author.scrollWidth + 8;
+                const availableWidth = book.clientWidth - paddingBuffer;
+
+                if (totalTextWidth <= availableWidth) {
+                    return; // Влезло! Выходим.
+                }
+
+                fontSize--;
+            }
+
+            // 2. Если дошли до минимума и всё равно не влезает -> скрываем АВТОРА
+            author.classList.add('hidden');
+            
+            // Название растягиваем на всю доступную ширину
+            title.style.marginRight = '0';
+            
+            // Устанавливаем шрифт названия на минимальный комфортный
+            title.style.fontSize = `${minFontSize}px`;
+            
+            // Финальная проверка для названия (если оно одно тоже не влезает, уменьшаем его)
+            let titleSize = minFontSize;
+            while (title.scrollWidth > (book.clientWidth - paddingBuffer) && titleSize > 7) {
+                titleSize--;
+                title.style.fontSize = `${titleSize}px`;
+            }
+        }
+
         function renderBooks() {
             container.innerHTML = '';
             booksData.forEach(book => {
-                const bookEl = createBookElement(book);
-                container.appendChild(bookEl);
+                createBookElement(book);
             });
         }
 
-        // Запуск
         renderBooks();
+        
+        // Пересчет при изменении размера окна (поворот экрана)
+        window.addEventListener('resize', () => {
+            container.innerHTML = '';
+            renderBooks();
+        });
 
     </script>
 </body>
